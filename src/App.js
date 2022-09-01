@@ -33,26 +33,20 @@ function App() {
 
     today = dd + '-' + mm + '-' + yyyy;
 
-    let params = {
-      Bucket: 'lukefreeman4231',
-      Key: today + '/top_sellers.json'
-    }
+    let objectURL = 'https://lukefreeman4231.s3.eu-central-1.amazonaws.com/' + today + '/top_sellers.json'
 
-    let o = await s3.getObject(params, async function(err,data){
-      //console.log(JSON.parse(new TextDecoder().decode(data.Body))['games'])
-      setGames(JSON.parse(new TextDecoder().decode(data.Body)))
-    })
-    //console.log(o.data)
-    return o
+    let xmlHttp = new XMLHttpRequest();
+    await xmlHttp.open( "GET", objectURL, false ) // false for synchronous request
+    xmlHttp.send( null );
+    console.log(xmlHttp.responseText);
+    setGames(JSON.parse(xmlHttp.responseText))
+
+
   }
 
 
 // Create an S3 client
-  s3 = new aws.S3({
-    region: 'eu-central-1',
-    accessKeyId: 'AKIASMDK4BQY7GZOCHLC',
-    secretAccessKey: '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'
-  });
+
 
 // Create a bucket and upload something into it
 
