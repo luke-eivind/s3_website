@@ -20,12 +20,10 @@ function App() {
       // let gl = '<img src="' + games['games'][0]['image'] + '"/>'
       // setGameList(gl)
       createTable()
-      console.log(games['games'][0])
     }
   }, [games])
 
   const getGamesFromS3 = async() => {
-
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -34,11 +32,9 @@ function App() {
     today = dd + '-' + mm + '-' + yyyy;
 
     let objectURL = 'https://lukefreeman4231.s3.eu-central-1.amazonaws.com/' + today + '/top_sellers.json'
-
     let xmlHttp = new XMLHttpRequest();
     await xmlHttp.open( "GET", objectURL, false ) // false for synchronous request
     xmlHttp.send( null );
-    console.log(xmlHttp.responseText);
     setGames(JSON.parse(xmlHttp.responseText))
 
 
